@@ -214,4 +214,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    //url de la api que se consumira
+    'api_url' => env('API_URL'),
+
 ];

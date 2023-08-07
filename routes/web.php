@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DepartmentsController;
@@ -20,14 +21,11 @@ Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
+    Route::get('/', [PostsController::class, 'index'])->name('posts.index');
+    Route::get('/UsersApi', [PostsController::class, 'getUsersPosts'])->name('posts.users');
+    Route::get('/user/{id?}', [PostsController::class, 'getPosts'])->name('posts.getPosts');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/getDepartments/{id?}', [DepartmentsController::class, 'load'])->name('departments.get');
     Route::get('/getCities/{id?}', [CitiesController::class, 'load'])->name('cities.get');
 });
