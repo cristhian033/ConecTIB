@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('document',11);
             $table->date('birth_date');
             $table->unsignedBigInteger('city_id');
-            $table->unsignedBigInteger('rol_id');
+            $table->unsignedBigInteger('rol_id')->default(2);
             $table->rememberToken();
             $table->timestamps();
         });

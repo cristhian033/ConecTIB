@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -24,8 +24,7 @@ class User extends Authenticatable
         'phone',
         'document',
         'birth_date',
-        'city_id',
-        'rol_id'
+        'city_id'
     ];
 
     /**
@@ -47,13 +46,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function city():HasOne
+    public function city():BelongsTo
     {
-        return $this->hasOne(City::class);
+        return $this->belongsTo(City::class);
     }
 
-    public function rol():HasOne
+    public function rol():BelongsTo
     {
-        return $this->hasOne(Rol::class);
+        return $this->belongsTo(Rol::class);
     }
 }
