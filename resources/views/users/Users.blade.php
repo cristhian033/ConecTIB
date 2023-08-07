@@ -31,7 +31,7 @@
                                 >{{ __('Usuario Eliminado.') }}</p>
                             @endif
 
-                            @if (session('status') === 'profile-deleted')
+                            @if (session('status') === 'profile-create')
                                 <p
                                     x-data="{ show: true }"
                                     x-show="show"

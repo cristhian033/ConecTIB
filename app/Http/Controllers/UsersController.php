@@ -6,7 +6,9 @@ use App\Models\City;
 use App\Models\User;
 use App\Models\Country;
 use Illuminate\View\View;
+use App\Events\UserDelete;
 use App\Models\Department;
+use App\Events\UserUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Yajra\DataTables\DataTables;
@@ -28,7 +30,7 @@ class UsersController extends Controller
     public function getUsers(Request $request):JsonResponse
     {
         if ($request->ajax()) {
-            $users=User::orderby("name","asc")->with("city")->get();
+            $users=User::orderby("id","asc")->with("city")->get();
             return Datatables::of($users)->make(true);
          }
     }
@@ -46,6 +48,7 @@ class UsersController extends Controller
     {
         $user=User::find($userId);
         $user->delete();
+        event(new UserDelete($user));
         return Redirect::route('user.show')->with('status', 'profile-deleted');
     }
 
@@ -72,7 +75,7 @@ class UsersController extends Controller
             $user->password=Hash::make($request->password);
         }
         $user->save();
-
+        event(new UserUpdated($user));
         return Redirect::route('user.show')->with('status', 'profile-updated');
     }
 

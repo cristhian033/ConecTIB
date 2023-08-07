@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use App\Models\Country;
 use Illuminate\View\View;
+use App\Events\UserCreate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
@@ -58,7 +59,7 @@ class RegisteredUserController extends Controller
 
         ]);
 
-        event(new Registered($user));
-        return Redirect::route('user.show')->with('status', 'profile-updated');
+        event(new UserCreate($user));
+        return Redirect::route('user.show')->with('status', 'profile-create');
     }
 }
