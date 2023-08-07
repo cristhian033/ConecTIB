@@ -8,8 +8,10 @@ use App\Models\Country;
 use Illuminate\View\View;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 
@@ -52,6 +54,10 @@ class UsersController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'max:100'],
+            'password' => ['nullable', 'confirmed', Rules\Password::min(8)
+                                                                    ->numbers()
+                                                                    ->symbols()
+                                                                    ->mixedCase()],
             'phone' => ['sometimes','nullable','string', 'max:10', 'min:10'],
             'birth_date' => ['required','date', 'before:'.now()->subYears(18)->toDateString()],
             'city_id' => ['required'],
@@ -62,6 +68,9 @@ class UsersController extends Controller
         $user->phone=$request->phone;
         $user->birth_date=$request->birth_date;
         $user->city_id=$request->city_id;
+        if($request->password!=''){
+            $user->password=Hash::make($request->password);
+        }
         $user->save();
 
         return Redirect::route('user.show')->with('status', 'profile-updated');

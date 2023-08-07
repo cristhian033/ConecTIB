@@ -117,6 +117,13 @@ return [
     'uploaded'             => 'Este campo no se pudo subir.',
     'url'                  => 'El formato dEste campo es inválido.',
     'uuid'                 => 'Este campo debe ser un UUID válido.',
+    'password' => [
+        'letters' => 'Este campo debe tener al menos una letra.',
+        'mixed' => 'Este campo debe tener al menos una letra mayuscula y una minuscula.',
+        'numbers' => 'Este campo debe tener al menos un numero.',
+        'symbols' => 'Este campo debe tener al menos un caracter especial.',
+        'uncompromised' => 'Esta contraseña ha sido comprometica en listas de contraseñas publicas, por favor intenta una diferente.',
+    ],
 
     /*
     |--------------------------------------------------------------------------
